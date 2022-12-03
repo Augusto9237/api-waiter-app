@@ -1,3 +1,3 @@
 import { model } from 'mongoose';
 
-export const Category = model('Categpry');
+export const Category = model('Category');
