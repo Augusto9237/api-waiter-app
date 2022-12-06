@@ -9,6 +9,7 @@ import { listProducts } from './app/useCases/products/listProducts';
 import { createProduct } from './app/useCases/products/createProduct';
 import { listProductByCategory } from './app/useCases/categories/listProductByCategory';
 import { listOrders } from './app/useCases/orders/listOrders';
+import { createOrder } from './app/useCases/orders/createOrder';
 
 export const router = Router();
 
@@ -35,9 +36,7 @@ router.get('/categories/:categoryId/products', listProductByCategory);
 
 router.get('/orders', listOrders);
 
-router.post('/orders', (req, res) => {
-  res.send('ok');
-});
+router.post('/orders', createOrder);
 
 router.patch('/orders/:orderId', (req, res) => {
   res.send('ok');
