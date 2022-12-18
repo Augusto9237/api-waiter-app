@@ -5,6 +5,10 @@ export const Order = model('Order', new Schema({
     type: String,
     required: true
   },
+  client: {
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     enum: ['WAITING', 'IN_PRODUCTION', 'DONE'],
