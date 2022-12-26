@@ -4,9 +4,9 @@ import { Order } from '../../models/Order';
 
 export async function createOrder(req: Request, res: Response) {
   try {
-    const { table, client, products } = req.body;
+    const { table, client, products, total } = req.body;
 
-    const order = await Order.create({ table, client, products });
+    const order = await Order.create({ table, client, products, total });
     const orderDetails = await order.populate('products.product');
 
     io.emit('orders@new', orderDetails);

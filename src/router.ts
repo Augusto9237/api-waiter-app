@@ -14,6 +14,8 @@ import { changeOrderStatus } from './app/useCases/orders/changeOrderStatus';
 import { cancelOrder } from './app/useCases/orders/cancelOrder';
 import { deleteCategory } from './app/useCases/categories/deleteCategory';
 import { deleteProduct } from './app/useCases/products/deleteCategory';
+import { listCategorById } from './app/useCases/categories/listCategoryById';
+import { changeCategory } from './app/useCases/categories/changeCategory';
 
 export const router = Router();
 
@@ -30,7 +32,11 @@ const upload = multer({
 
 router.get('/categories', listCategories);
 
+router.get('/categories/:categoryId', listCategorById);
+
 router.post('/categories', createCategory);
+
+router.patch('/categories/:categoryId', changeCategory);
 
 router.delete('/categories/:categoryId', deleteCategory);
 

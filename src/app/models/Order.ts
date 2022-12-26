@@ -31,5 +31,9 @@ export const Order = model('Order', new Schema({
         default: 1,
       }
     }]
+  },
+  total: {
+    type: Number,
+    default: 0,
   }
 }));
