@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 
 import { router } from './router';
+import bodyParser from 'body-parser';
 
 
 const app = express();
@@ -16,7 +17,7 @@ export const io = new Server(server);
 mongoose.connect('mongodb+srv://augustosousa:rQtnQY6RSrd3lCvT@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
     const port = 3001;
-
+    app.use(bodyParser.json());
 
     app.use((req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
