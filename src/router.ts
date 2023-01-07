@@ -17,7 +17,7 @@ import { deleteProduct } from './app/useCases/products/deleteCategory';
 import { listCategorById } from './app/useCases/categories/listCategoryById';
 import { changeCategory } from './app/useCases/categories/changeCategory';
 import { listProductById } from './app/useCases/products/listProductById';
-import { updateProduct } from './app/useCases/products/updateProduct';
+import { changeProduct } from './app/useCases/products/changeProduct';
 
 export const router = Router();
 
@@ -50,7 +50,7 @@ router.get('/categories/:categoryId/products', listProductByCategory);
 
 router.get('/products/:productId', listProductById);
 
-router.patch('/products/:productId', updateProduct);
+router.patch('/products/:productId',  upload?.single('image'), changeProduct);
 
 router.delete('/products/:productId', deleteProduct);
 
