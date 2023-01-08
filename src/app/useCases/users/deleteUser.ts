@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../../models/User';
 
 
-export async function deleteCategory(req: Request, res: Response) {
+export async function deleteUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
 

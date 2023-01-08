@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { User } from '../../models/User';
 
-export async function changeCategory(req: Request, res: Response) {
+export async function changeUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const { name, password, office } = req.body;

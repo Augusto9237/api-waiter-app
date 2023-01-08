@@ -20,6 +20,8 @@ import { listProductById } from './app/useCases/products/listProductById';
 import { changeProduct } from './app/useCases/products/changeProduct';
 import { createUser } from './app/useCases/users/createUser';
 import { listUsers } from './app/useCases/users/listUsers';
+import { deleteUser } from './app/useCases/users/deleteUser';
+import { changeUser } from './app/useCases/users/changeUser';
 
 export const router = Router();
 
@@ -67,3 +69,7 @@ router.delete('/orders/:orderId', cancelOrder);
 router.post('/users', createUser);
 
 router.get('/users', listUsers);
+
+router.patch('/users/:userId', changeUser);
+
+router.delete('/users/:userId', deleteUser);
