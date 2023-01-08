@@ -19,7 +19,7 @@ import { changeCategory } from './app/useCases/categories/changeCategory';
 import { listProductById } from './app/useCases/products/listProductById';
 import { changeProduct } from './app/useCases/products/changeProduct';
 import { createUser } from './app/useCases/users/createUser';
-import { listUsers } from './app/useCases/users/listCategories';
+import { listUsers } from './app/useCases/users/listUsers';
 
 export const router = Router();
 
