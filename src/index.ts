@@ -1,5 +1,7 @@
 import path from 'node:path';
 
+import dotenv from 'dotenv';
+
 import  http from 'node:http';
 
 import express from 'express';
@@ -8,11 +10,13 @@ import { Server } from 'socket.io';
 
 import { router } from './router';
 import bodyParser from 'body-parser';
+import bcrypt from 'bcrypt';
 
 
 const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
+const env = dotenv.config();
 
 mongoose.connect('mongodb+srv://augustosousa:rQtnQY6RSrd3lCvT@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
