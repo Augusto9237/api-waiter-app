@@ -25,6 +25,7 @@ import { listUsers } from './app/useCases/users/listUsers';
 import { deleteUser } from './app/useCases/users/deleteUser';
 import { changeUser } from './app/useCases/users/changeUser';
 import { authUser } from './app/useCases/users/authUser';
+import { checkToken } from './app/useCases/users/chekToken';
 
 export const router = Router();
 
@@ -39,25 +40,7 @@ const upload = multer({
   }),
 });
 
-function checkToken(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
 
-  if(!token) {
-    return  res.status(401).json({ msg: 'Acesso negado!'});
-  }
-
-  try {
-    const secret = process.env.SECRET!;
-
-    jwt.verify(token, secret);
-
-    next();
-
-  } catch (error) {
-    res.status(400).json({msg: 'Token invalido'});
-  }
-}
 
 router.get('/categories', listCategories);
 
