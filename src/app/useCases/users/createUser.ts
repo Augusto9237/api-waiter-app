@@ -6,6 +6,12 @@ export async function createUser(req: Request, res: Response) {
   try {
     const { name, password, office } = req.body;
 
+    const userDb = await User.findOne({ name: name });
+
+    if (userDb) {
+      return res.status(404).json({ msg: 'Usuario já cadastrado!' });
+    }
+
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
