@@ -1,7 +1,9 @@
 import path from 'node:path';
-
+import { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import multer from 'multer';
+
+import jwt from 'jsonwebtoken';
 
 import { createCategory } from './app/useCases/categories/createCategory';
 import { listCategories } from './app/useCases/categories/listCategories';
@@ -37,6 +39,26 @@ const upload = multer({
   }),
 });
 
+function checkToken(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if(!token) {
+    return  res.status(401).json({ msg: 'Acesso negado!'});
+  }
+
+  try {
+    const secret = process.env.SECRET!;
+
+    jwt.verify(token, secret);
+
+    next();
+
+  } catch (error) {
+    res.status(400).json({msg: 'Token invalido'});
+  }
+}
+
 router.get('/categories', listCategories);
 
 router.get('/categories/:categoryId', listCategorById);
@@ -59,7 +81,7 @@ router.patch('/products/:productId',  upload?.single('image'), changeProduct);
 
 router.delete('/products/:productId', deleteProduct);
 
-router.get('/orders', listOrders);
+router.get('/orders', checkToken, listOrders);
 
 router.post('/orders', createOrder);
 
