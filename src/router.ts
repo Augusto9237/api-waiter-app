@@ -70,6 +70,8 @@ router.post('/users', createUser);
 
 router.get('/users', listUsers);
 
+router.get('/users', listUsers);
+
 router.patch('/users/:userId', changeUser);
 
 router.delete('/users/:userId', deleteUser);

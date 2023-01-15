@@ -10,7 +10,7 @@ import { Server } from 'socket.io';
 
 import { router } from './router';
 import bodyParser from 'body-parser';
-import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 const app = express();
@@ -18,7 +18,11 @@ const server = http.createServer(app);
 export const io = new Server(server);
 const env = dotenv.config();
 
-mongoose.connect('mongodb+srv://augustosousa:rQtnQY6RSrd3lCvT@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority')
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASS;
+
+mongoose.connect(
+  `mongodb+srv://${dbUser}:${dbPassword}@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => {
     const port = 3001;
     app.use(bodyParser.json());
