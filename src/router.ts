@@ -63,11 +63,11 @@ router.get('/categories', listCategories);
 
 router.get('/categories/:categoryId', listCategorById);
 
-router.post('/categories', createCategory);
+router.post('/categories', checkToken, createCategory);
 
-router.patch('/categories/:categoryId', changeCategory);
+router.patch('/categories/:categoryId', checkToken, changeCategory);
 
-router.delete('/categories/:categoryId', deleteCategory);
+router.delete('/categories/:categoryId', checkToken,  deleteCategory);
 
 router.get('/products', listProducts);
 
