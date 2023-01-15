@@ -22,6 +22,7 @@ import { createUser } from './app/useCases/users/createUser';
 import { listUsers } from './app/useCases/users/listUsers';
 import { deleteUser } from './app/useCases/users/deleteUser';
 import { changeUser } from './app/useCases/users/changeUser';
+import { authUser } from './app/useCases/users/authUser';
 
 export const router = Router();
 
@@ -70,8 +71,8 @@ router.post('/users', createUser);
 
 router.get('/users', listUsers);
 
-router.get('/users', listUsers);
-
 router.patch('/users/:userId', changeUser);
 
 router.delete('/users/:userId', deleteUser);
+
+router.post('/users/auth', authUser);
