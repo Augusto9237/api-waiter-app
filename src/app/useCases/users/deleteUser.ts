@@ -8,8 +8,8 @@ export async function deleteUser(req: Request, res: Response) {
 
     await User.findByIdAndDelete(userId);
 
-    res.sendStatus(204);
+    res.status(204).json({ msg: 'Usuário deletado com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao deletar o usuário!' });
   }
 }
