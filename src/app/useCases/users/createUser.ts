@@ -20,7 +20,7 @@ export async function createUser(req: Request, res: Response) {
       password: passwordHash,
       office });
 
-    res.status(201).json({ msg: 'Cliente cadastrado com sucesso!' });
+    res.status(201).json({ msg: 'Usuário cadastrado com sucesso!' });
   } catch (error) {
     res.status(500).json({ msg: 'Erro ao cadastrar o usuário!' });
   }

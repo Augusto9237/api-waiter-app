@@ -12,8 +12,8 @@ export async function changeUser(req: Request, res: Response) {
 
     await User.findByIdAndUpdate(userId, { name, password: passwordHash, office });
 
-    res.sendStatus(204);
+    res.status(204).json({ msg: 'Usuário atualizado com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao atualizar o usuário!' });
   }
 }
