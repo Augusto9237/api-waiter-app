@@ -15,13 +15,13 @@ export async function createUser(req: Request, res: Response) {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
+    await User.create({
       name,
       password: passwordHash,
       office });
 
-    res.status(201).json(user);
+    res.status(201).json({ msg: 'Cliente cadastrado com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao cadastrar o usuário!' });
   }
 }
