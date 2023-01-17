@@ -12,7 +12,7 @@ export async function changeUser(req: Request, res: Response) {
 
     await User.findByIdAndUpdate(userId, { name, password: passwordHash, office });
 
-    res.status(204).json({ msg: 'Usuário atualizado com sucesso!' });
+    res.status(200).json({ msg: 'Usuário atualizado com sucesso!' });
   } catch (error) {
     res.status(500).json({ msg: 'Erro ao atualizar o usuário!' });
   }

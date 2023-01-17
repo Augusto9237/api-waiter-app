@@ -19,7 +19,7 @@ export async function changeProduct(req: Request, res: Response) {
       ingredients: ingredients ? JSON.parse(ingredients) : [],
     }, options);
 
-    res.status(201).json({ msg: 'Produto atualizado com sucesso!' });
+    res.status(200).json({ msg: 'Produto atualizado com sucesso!' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Erro ao atualizar o produto!' });
