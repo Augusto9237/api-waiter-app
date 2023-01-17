@@ -8,8 +8,8 @@ export async function deleteCategory(req: Request, res: Response) {
 
     await Category.findByIdAndDelete(categoryId);
 
-    res.sendStatus(204);
+    res.status(200).json({ msg: 'Categoria deletada com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao deletar categoria!' });
   }
 }

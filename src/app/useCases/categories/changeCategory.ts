@@ -8,8 +8,8 @@ export async function changeCategory(req: Request, res: Response) {
 
     await Category.findByIdAndUpdate(categoryId, { icon, name });
 
-    res.sendStatus(204);
+    res.status(200).json({ msg: 'Categoria atualizada com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao atualizar categoria!' });
   }
 }

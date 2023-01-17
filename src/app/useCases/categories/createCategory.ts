@@ -10,6 +10,6 @@ export async function createCategory(req: Request, res: Response) {
 
     res.status(201).json({ msg: 'Categoria cadastrada com sucesso!' });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao cadastrar categoria!' });
   }
 }
