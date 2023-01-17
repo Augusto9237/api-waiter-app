@@ -1,9 +1,7 @@
 import path from 'node:path';
-import { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import multer from 'multer';
 
-import jwt from 'jsonwebtoken';
 
 import { createCategory } from './app/useCases/categories/createCategory';
 import { listCategories } from './app/useCases/categories/listCategories';
@@ -15,7 +13,7 @@ import { createOrder } from './app/useCases/orders/createOrder';
 import { changeOrderStatus } from './app/useCases/orders/changeOrderStatus';
 import { cancelOrder } from './app/useCases/orders/cancelOrder';
 import { deleteCategory } from './app/useCases/categories/deleteCategory';
-import { deleteProduct } from './app/useCases/products/deleteCategory';
+import { deleteProduct } from './app/useCases/products/deleteProduct';
 import { listCategorById } from './app/useCases/categories/listCategoryById';
 import { changeCategory } from './app/useCases/categories/changeCategory';
 import { listProductById } from './app/useCases/products/listProductById';
