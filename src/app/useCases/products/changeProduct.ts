@@ -10,7 +10,7 @@ export async function changeProduct(req: Request, res: Response) {
 
     const options = { returnOriginal: false };
 
-    const product = await Product.findByIdAndUpdate( productId, {
+    await Product.findByIdAndUpdate( productId, {
       name,
       description,
       imagePath,
@@ -19,9 +19,9 @@ export async function changeProduct(req: Request, res: Response) {
       ingredients: ingredients ? JSON.parse(ingredients) : [],
     }, options);
 
-    res.status(201).json(product);
+    res.status(201).json({ msg: 'Produto atualizado com sucesso!' });
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao atualizar o produto!' });
   }
 }

@@ -8,7 +8,7 @@ export async function createProduct(req: Request, res: Response) {
     const imagePath = req.file?.filename;
     const {name, description, price, category, ingredients} = req.body;
 
-    const product = await Product.create({
+    await Product.create({
       name,
       description,
       imagePath,
@@ -17,10 +17,10 @@ export async function createProduct(req: Request, res: Response) {
       ingredients: ingredients ? JSON.parse(ingredients) : [],
     });
 
-    res.status(201).json(product);
+    res.status(201).json({ msg: 'Produto cadastrado com sucesso!' });
 
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.status(500).json({ msg: 'Erro ao cadastrar o produto!' });
   }
 }
