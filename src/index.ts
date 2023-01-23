@@ -20,6 +20,7 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
 const env = dotenv.config();
+
 app.use(cors());
 
 const dbUser = process.env.DB_USER;
