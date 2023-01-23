@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 
 import  http from 'node:http';
 
+import cors from 'cors';
+
 import express from 'express';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
@@ -14,9 +16,11 @@ import bodyParser from 'body-parser';
 
 
 const app = express();
+
 const server = http.createServer(app);
 export const io = new Server(server);
 const env = dotenv.config();
+app.use(cors());
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASS;
