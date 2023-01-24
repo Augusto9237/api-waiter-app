@@ -21,7 +21,7 @@ const server = http.createServer(app);
 export const io = new Server(server);
 const env = dotenv.config();
 
-app.use(cors());
+
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASS;
@@ -30,13 +30,14 @@ mongoose.connect(
   `mongodb+srv://${dbUser}:${dbPassword}@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => {
     const port = 3001;
+
     app.use(bodyParser.json());
 
     app.use((req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, PATCH, POST, DELETE');
       res.setHeader('Access-Control-Allow-Headers', '*');
-
+      app.use(cors());
       next();
     });
     app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));

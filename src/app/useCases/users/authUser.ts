@@ -32,6 +32,8 @@ export async function authUser(req: Request, res: Response) {
       const token = jwt.sign(
         {
           id: user._id,
+          nm: user.name,
+          of: user.office
         },
         secret
       );
