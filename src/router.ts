@@ -62,7 +62,7 @@ router.patch('/products/:productId',  upload?.single('image'), changeProduct);
 
 router.delete('/products/:productId', deleteProduct);
 
-router.get('/orders', listOrders);
+router.get('/orders', checkToken, listOrders);
 
 router.post('/orders', createOrder);
 
