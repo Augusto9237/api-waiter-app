@@ -24,7 +24,7 @@ export async function authUser(req: Request, res: Response) {
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      return res.status(422).json({ msg: 'Senha invalida!' });
+      return res.status(422).json({ msg: 'Usuario e/ou Senha invalida' });
     }
 
     try {
