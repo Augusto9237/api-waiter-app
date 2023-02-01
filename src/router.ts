@@ -24,6 +24,7 @@ import { deleteUser } from './app/useCases/users/deleteUser';
 import { changeUser } from './app/useCases/users/changeUser';
 import { authUser } from './app/useCases/users/authUser';
 import { checkToken } from './app/useCases/users/chekToken';
+import { listAttendants } from './app/useCases/users/listAttendants';
 
 export const router = Router();
 
@@ -73,6 +74,8 @@ router.delete('/orders/:orderId', cancelOrder);
 router.post('/users', createUser);
 
 router.get('/users', listUsers);
+
+router.get('/attendants', listAttendants);
 
 router.patch('/users/:userId', changeUser);
 
