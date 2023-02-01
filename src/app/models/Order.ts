@@ -5,6 +5,11 @@ export const Order = model('Order', new Schema({
     type: String,
     required: true
   },
+  clerk: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
   client: {
     type: String,
     required: true
