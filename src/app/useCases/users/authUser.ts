@@ -35,7 +35,7 @@ export async function authUser(req: Request, res: Response) {
           nm: user.name,
           of: user.office
         },
-        secret
+        secret,
       );
 
       res.status(200).json({msg: 'Autenticado com sucesso!', token});
