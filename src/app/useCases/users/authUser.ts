@@ -36,6 +36,7 @@ export async function authUser(req: Request, res: Response) {
           of: user.office
         },
         secret,
+        { expiresIn: '24h' }
       );
 
       res.status(200).json({msg: 'Autenticado com sucesso!', token});
