@@ -25,6 +25,8 @@ import { changeUser } from './app/useCases/users/changeUser';
 import { authUser } from './app/useCases/users/authUser';
 import { checkToken } from './app/useCases/users/chekToken';
 import { listAttendants } from './app/useCases/users/listAttendants';
+import { getOrdersByPeriod} from './app/useCases/orders/listOrdersFiltered';
+
 
 export const router = Router();
 
@@ -63,7 +65,7 @@ router.patch('/products/:productId',  upload?.single('image'), changeProduct);
 
 router.delete('/products/:productId', deleteProduct);
 
-router.get('/orders',checkToken, listOrders);
+router.get('/orders', listOrders);
 
 router.post('/orders', createOrder);
 

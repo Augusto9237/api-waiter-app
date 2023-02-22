@@ -1,58 +1,97 @@
 import { Request, Response } from 'express';
 import { Order } from '../../models/Order';
 
-export async function listOrdersFiltered(req: Request, res: Response) {
-  let groupBy: 'day' | 'week' | 'month' | null | any = req.query.groupBy;
-
-  // Se o parâmetro groupBy não foi passado, define como null
-  if (!groupBy) {
-    groupBy = null;
-  }
-
+export async function getOrdersByPeriod(req: Request, res: Response): Promise<any> {
   try {
-  // Se groupBy for null, retorna todos os dados sem agrupamento
-    if (!groupBy) {
-      const orders = await Order.find()
-        .populate({
-          path: 'clerk',
-          select: '-password'
-        })
-        .populate('products.product')
-        .sort({ createdAt: 1 });
+    const groupBy: string = req.query.groupBy as string;
+    const now = new Date();
+    let start: Date;
+    let end: Date;
 
-      res.json(orders);
-      return;
+    if (groupBy === 'week') {
+      start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      end = now;
+    } else if (groupBy === 'month') {
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    } else if (groupBy === 'year') {
+      start = new Date(now.getFullYear(), 0, 1);
+      end = new Date(now.getFullYear(), 11, 31);
+    } else {
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     }
 
-    // Caso contrário, agrupa e retorna os dados
-    let dateExpression: string;
-    switch (groupBy) {
-    case 'day':
-      dateExpression = '$dayOfMonth';
-      break;
-    case 'week':
-      dateExpression = '$week';
-      break;
-    case 'month':
-      dateExpression = '$month';
-      break;
-    default:
-      dateExpression = '$dayOfMonth';
-      break;
-    }
-
-    const result = await Order.aggregate([
+    const orders = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: start, $lt: end }
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'clerk',
+          foreignField: '_id',
+          as: 'clerk'
+        }
+      },
+      {
+        $unwind: '$clerk'
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'products.product',
+          foreignField: '_id',
+          as: 'products.product'
+        }
+      },
       {
         $group: {
-          _id: { [dateExpression]: { $dayOfMonth: '$createdAt' } },
-          count: { $sum: 1 },
-          total: { $sum: '$total' }
+          _id: {
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' },
+            day: { $dayOfMonth: '$createdAt' },
+            client: '$client',
+            table: '$table',
+            clerk: '$clerk',
+            status: '$status',
+            product: '$products.product'
+          },
+          quantity: { $sum: '$products.quantity' },
+          total: { $sum: { $multiply: ['$products.quantity', '$products.product.price'] } }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          date: {
+            year: '$_id.year',
+            month: '$_id.month',
+            day: '$_id.day'
+          },
+          client: '$_id.client',
+          table: '$_id.table',
+          clerk: {
+            _id: '$_id.clerk._id',
+            name: '$_id.clerk.name'
+          },
+          product: {
+            name: '$_id.product.name',
+            price: '$_id.product.price',
+            category: '$_id.product.category'
+          },
+          status: '$status',
+          quantity: '$quantity',
+          total: '$total'
         }
       }
     ]);
 
-    res.json(result);
-  } catch (error) {
-    res.sendStatus(500);
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
   }
 }
