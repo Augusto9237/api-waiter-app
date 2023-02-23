@@ -35,11 +35,13 @@ export async function listOrders(req: Request, res: Response) {
 
 
     res.status(200).json({
-      nextUrl,
-      previousUrl,
-      limits,
-      offsets,
-      countOrders,
+      pagination: {
+        next: nextUrl,
+        previous: previousUrl,
+        limit: limits,
+        offset: offsets,
+        total: countOrders
+      },
       orders
     });
   } catch (error) {
