@@ -10,7 +10,11 @@ export async function changeUser(req: Request, res: Response) {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    await User.findByIdAndUpdate(userId, { name, password: passwordHash, office });
+    await User.findByIdAndUpdate(userId, {
+      name,
+      password: passwordHash,
+      office,
+    });
 
     res.status(200).json({ msg: 'Usuário atualizado com sucesso!' });
   } catch (error) {

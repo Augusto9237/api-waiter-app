@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import dotenv from 'dotenv';
 
-import  http from 'node:http';
+import http from 'node:http';
 
 import cors from 'cors';
 
@@ -13,21 +13,19 @@ import { Server } from 'socket.io';
 import { router } from './router';
 import bodyParser from 'body-parser';
 
-
-
 const app = express();
 
 const server = http.createServer(app);
 export const io = new Server(server);
 const env = dotenv.config();
 
-
-
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASS;
 
-mongoose.connect(
-  `mongodb+srv://${dbUser}:${dbPassword}@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority`)
+mongoose
+  .connect(
+    `mongodb+srv://${dbUser}:${dbPassword}@cluster0.uizxrtg.mongodb.net/?retryWrites=true&w=majority`
+  )
   .then(() => {
     const port = 3001;
 
@@ -40,15 +38,15 @@ mongoose.connect(
       app.use(cors());
       next();
     });
-    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+    app.use(
+      '/uploads',
+      express.static(path.resolve(__dirname, '..', 'uploads'))
+    );
     app.use(express.json());
     app.use(router);
 
     server.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
-
   })
   .catch(() => console.log('error'));
-
-
